@@ -22,9 +22,9 @@ public class Bot {
         Random random = new Random();
         GroupActor actor = new GroupActor(195513811,"0870ea9e4e17a19872349650ea18387d26a8638591622ccdb503c71f5a7b3fc73dc5e1b914d90de3041c3");
         Integer ts = vk.messages().getLongPollServer(actor).execute().getTs();
-        Keyboard keyboard = new Keyboard();
-        keyboard = KeyBoardFactory.createKeyboard(3,"Т","П","Т","Т","Т");
-        int i = 0;
+//        Keyboard keyboard = new Keyboard();
+//        keyboard = KeyBoardFactory.createKeyboard(3,"Т","П","Т","Т","Т");
+//        int i = 0;
         while (true)
         {
             MessagesGetLongPollHistoryQuery historyQuery = vk.messages().getLongPollHistory(actor).ts(ts);
@@ -37,7 +37,7 @@ public class Bot {
                     try {
                         if (message.getText().equals("Начать")) {
                             vk.messages().send(actor).message("Ааааа").userId(message.getFromId()).randomId(random.nextInt(10000)).execute();
-                            vk.messages().send(actor).message("Выберите вашу специальность").userId(message.getFromId()).randomId(random.nextInt(10000)).keyboard(KeyBoardFactory.createKeyboard(1,"Т","П","Т","Т","Т"))
+                            vk.messages().send(actor).message("Выберите вашу специальность").userId(message.getFromId()).randomId(random.nextInt(10000)).keyboard(KeyBoardFactory.createKeyboard(1,"Т"))
                                     .execute();
                         }else if(message.getText().equals("Т")){
 

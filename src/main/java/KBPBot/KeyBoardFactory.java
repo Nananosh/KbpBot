@@ -44,8 +44,10 @@ public class KeyBoardFactory {
                     row.add(createKeyboardButton(textQueue.poll(),keyboardButtonColor));
                 }else{state=false;}
             }
-            rowList.add(row);
-            colorsType=!colorsType;
+            if(state!=false){
+                rowList.add(row);
+                colorsType=!colorsType;
+            }
         }
         return rowList;
     }
