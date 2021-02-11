@@ -42,7 +42,7 @@ public class KeyBoardFactory {
                         keyboardButtonColor = KeyboardButtonColor.DEFAULT;
                     }
                     row.add(createKeyboardButton(textQueue.poll(),keyboardButtonColor));
-                }
+                }else{state=false;}
             }
             rowList.add(row);
             colorsType=!colorsType;
