@@ -36,18 +36,18 @@ public class KeyBoardFactory {
                 if(textQueue.peek()!=null){
                     KeyboardButtonColor keyboardButtonColor;
                     if(colorsType){
-                        keyboardButtonColor = KeyboardButtonColor.PRIMARY;
-                    }
-                    else{
                         keyboardButtonColor = KeyboardButtonColor.DEFAULT;
                     }
+                    else{
+                        keyboardButtonColor = KeyboardButtonColor.PRIMARY;
+                    }
                     row.add(createKeyboardButton(textQueue.poll(),keyboardButtonColor));
-                }else{state=false;}
+                }else{state=false;break;}
             }
-            if(state!=false){
+            if (!row.isEmpty()){
                 rowList.add(row);
-                colorsType=!colorsType;
             }
+                colorsType=!colorsType;
         }
         return rowList;
     }
