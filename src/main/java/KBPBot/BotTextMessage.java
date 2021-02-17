@@ -20,6 +20,6 @@ public class BotTextMessage implements Sendable {
 
     @Override
     public void send(VkApiClient vk, GroupActor actor, int userId) throws ClientException, ApiException, SQLException {
-        vk.messages().send(actor).message(textMessage).userId(userId).randomId(DBConnector.getVkUserFromDB(userId).getLast_message_id()+1).keyboard(keyboard).execute();
+        vk.messages().send(actor).message(textMessage).userId(userId).randomId(DBConnector.getLastMessageIdVkUserFromDB(userId)).keyboard(keyboard).execute();
     }
 }

@@ -1,5 +1,6 @@
 package KBPBot;
 
+
 import com.vk.api.sdk.client.VkApiClient;
 import com.vk.api.sdk.client.actors.GroupActor;
 import com.vk.api.sdk.client.actors.UserActor;
@@ -31,9 +32,19 @@ public class MessageHandler {
                             "/get - получить расписание одной из своих подписок\n" +
                             "/see - посмотреть другое расписание, не подписываясь на него\n" +
                             "/notify - настроить ежедневную рассылку расписания из твоих подписок\n" +
-                            "/notes - открыть заметки\n",KeyBoardFactory.createKeyboard(5,"/info","/subscribe","/get","/see","/notify","/notes")).send(vk,actor,message.getFromId());
+                            "/notes - открыть заметки\n",KeyBoardFactory.createKeyboard(3      ,"/info","/subscribe","/get","/see","/notify","/notes")).send(vk,actor,message.getFromId());
                 }else{
-                    System.out.println("Нет");
+                    System.out.print("Net");
+                    DBConnector.insertVkUserInDB(UserVkFactory.userVk(message.getFromId(),vk,actor,"Лох","Vk",0));
+                    if(DBConnector.isVkUserInDb(message.getFromId())){
+                        MessageFactory.createMessage("Привет!\nЭтот бот поможет смотреть расписание твоего любимого колледжа!\nЧтобы начать необходимо ввести одну из команд ниже:\n" +
+                                "/info - информация о боте и его командах (ты тут)\n" +
+                                "/subscribe - подписаться на один из источников (твоя группа именно здесь)\n" +
+                                "/get - получить расписание одной из своих подписок\n" +
+                                "/see - посмотреть другое расписание, не подписываясь на него\n" +
+                                "/notify - настроить ежедневную рассылку расписания из твоих подписок\n" +
+                                "/notes - открыть заметки\n",KeyBoardFactory.createKeyboard(3      ,"/info","/subscribe","/get","/see","/notify","/notes")).send(vk,actor,message.getFromId());
+                    }
                 }
         }
     }

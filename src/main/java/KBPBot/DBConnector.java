@@ -20,8 +20,8 @@ public class DBConnector {
 //        int result = statement.executeUpdate(query);
 //        return result;
 //    }
-    public static UserVK getVkUserFromDB(int userID) throws SQLException {
-        String query = "SELECT * FROM Users WHERE platform='Vk' and id= " + userID; // наш запрос к бд
+    public static UserVK getVkUserFromDB(int userId) throws SQLException {
+        String query = "SELECT * FROM Users WHERE platform='Vk' and id= " + userId; // наш запрос к бд
         PreparedStatement statement = connection.prepareStatement(query); // создаём наш запрос к бд
         statement.execute(); // выполняем запрос к бд
         // Обработаем результат
@@ -41,8 +41,8 @@ public class DBConnector {
         PreparedStatement statement = connection.prepareStatement(query); // создаём наш запрос к бд
         statement.execute(); // выполняем запрос к бд
     }
-    public static void changeStateVkUserInDB(String state, int userID) throws SQLException {
-        String query = "UPDATE Users Set state='"+state+"'WHERE platform='Vk' and id=" + userID; // наш запрос к бд
+    public static void changeStateVkUserInDB(String state, int userId) throws SQLException {
+        String query = "UPDATE Users Set state='"+state+"'WHERE platform='Vk' and id=" + userId; // наш запрос к бд
         PreparedStatement statement = connection.prepareStatement(query); // создаём наш запрос к бд
         statement.execute(); // выполняем запрос к бд
     }
@@ -52,6 +52,21 @@ public class DBConnector {
         statement.execute();
         ResultSet resultSet = statement.getResultSet();
         return resultSet.next();
+    }
+    public static int getLastMessageIdVkUserFromDB(int userId) throws SQLException {
+        String query = "SELECT * FROM Users WHERE platform='Vk' and id= " + userId; // наш запрос к бд
+        PreparedStatement statement = connection.prepareStatement(query); // создаём наш запрос к бд
+        statement.execute(); // выполняем запрос к бд
+        // Обработаем результат
+        ResultSet resultSet = statement.getResultSet();
+        resultSet.next();
+        changeIdVkUserInDB(userId);
+        return resultSet.getInt("last_message_id");
+    }
+    public static void changeIdVkUserInDB(int userId) throws SQLException {
+        String query = "UPDATE Users Set last_message_id='"+(getVkUserFromDB(userId).getLast_message_id()+1)+"'WHERE platform='Vk' and id=" + userId; // наш запрос к бд
+        PreparedStatement statement = connection.prepareStatement(query); // создаём наш запрос к бд
+        statement.execute();
     }
 
 }
