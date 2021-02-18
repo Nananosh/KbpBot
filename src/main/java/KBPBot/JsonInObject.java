@@ -10,7 +10,7 @@ import com.vk.api.sdk.objects.users.User;
 
 import java.util.List;
 
-public class JsonFromObject {
+public class JsonInObject {
     public static String getFirstName(int userId, VkApiClient vk, GroupActor actor) throws ClientException, ApiException {
         List listName = vk.users().get(actor).userIds(""+userId).execute();
         String name = listName.get(0).toString();

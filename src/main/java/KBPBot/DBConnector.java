@@ -1,8 +1,7 @@
 package KBPBot;
 
-import org.junit.Test;
-
 import java.sql.*;
+import java.util.List;
 
 public class DBConnector {
     private static Connection connection;
@@ -20,7 +19,7 @@ public class DBConnector {
 //        int result = statement.executeUpdate(query);
 //        return result;
 //    }
-    public static UserVK getVkUserFromDB(int userId) throws SQLException {
+    public static UserVk getVkUserFromDB(int userId) throws SQLException {
         String query = "SELECT * FROM Users WHERE platform='Vk' and id= " + userId; // наш запрос к бд
         PreparedStatement statement = connection.prepareStatement(query); // создаём наш запрос к бд
         statement.execute(); // выполняем запрос к бд
@@ -33,10 +32,10 @@ public class DBConnector {
         String state = resultSet.getString("state");
         String platform = resultSet.getString("platform");
         int last_message_id = resultSet.getInt("last_message_id");
-        System.out.println(new UserVK(id,firstname,lastname,state,platform,last_message_id));
-        return new UserVK(id,firstname,lastname,state,platform,last_message_id);
+        System.out.println(new UserVk(id,firstname,lastname,state,platform,last_message_id));
+        return new UserVk(id,firstname,lastname,state,platform,last_message_id);
     }
-    public static void insertVkUserInDB(UserVK userVk) throws SQLException {
+    public static void insertVkUserInDB(UserVk userVk) throws SQLException {
         String query = String.format("INSERT INTO users VALUES(%d,N'%s',N'%s',N'%s',N'%s',%d)", userVk.getId(),userVk.getFirstname(),userVk.getLastname(),userVk.getState(),userVk.getPlatform(),userVk.getLast_message_id());
         PreparedStatement statement = connection.prepareStatement(query); // создаём наш запрос к бд
         statement.execute(); // выполняем запрос к бд
@@ -68,5 +67,20 @@ public class DBConnector {
         PreparedStatement statement = connection.prepareStatement(query); // создаём наш запрос к бд
         statement.execute();
     }
+    public static void getSourcesInDB(String typeSource) throws SQLException {
+        String query = String.format("SELECT * FROM sources WHERE type in ('%s')",typeSource); // наш запрос к бд
+        PreparedStatement statement = connection.prepareStatement(query); // создаём наш запрос к бд
+        statement.execute(); // выполняем запрос к бд
+        // Обработаем результат
+        ResultSet resultSet = statement.getResultSet();
+        resultSet.next();
+        List res = null;
+//        for (int i = 0; i < 3; i++) {
+            res.add(resultSet.getString("name"));
+//        }
+        res.stream().count();
+        System.out.println(res.stream().count());
+    }
+
 
 }

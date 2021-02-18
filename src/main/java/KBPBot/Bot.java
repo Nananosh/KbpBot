@@ -36,7 +36,7 @@ public class Bot {
 ////                            (new BotTextMessage("Выберите вашу специальность",KeyBoardFactory.createKeyboard(4,(String[]) getAllSpecial().toArray() ))).send(vk,actor,message.getFromId());
 ////                        }else if(getAllSpecial().contains(message.getText())){
 ////                            (new BotTextMessage("Выберите вашу группу",KeyBoardFactory.createKeyboard(4,getAllGroup(message.getText())))).send(vk,actor,message.getFromId());
-////                        }
+////                        }   
                        botsMessage.hadnle(message);
                    }
                     catch (SQLException e ){e.printStackTrace();} catch (ClientException e) {

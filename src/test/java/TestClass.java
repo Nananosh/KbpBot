@@ -1,22 +1,15 @@
 import KBPBot.DBConnector;
-import KBPBot.UserVK;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
 import com.vk.api.sdk.client.TransportClient;
 import com.vk.api.sdk.client.VkApiClient;
 import com.vk.api.sdk.client.actors.GroupActor;
-import com.vk.api.sdk.client.actors.UserActor;
 import com.vk.api.sdk.exceptions.ApiException;
 import com.vk.api.sdk.exceptions.ClientException;
 import com.vk.api.sdk.httpclient.HttpTransportClient;
-import com.vk.api.sdk.objects.messages.Message;
-import com.vk.api.sdk.queries.messages.MessagesGetLongPollHistoryQuery;
-import com.vk.api.sdk.queries.users.UsersGetQuery;
 import org.junit.Test;
 
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -41,8 +34,7 @@ public class TestClass {
 //
 //       // String subArgs = obj.get("first_name").getAsString();
 //        System.out.print(parser.parse(listName.get(0).toString()).getAsJsonObject().get("first_name").getAsString());
-
-
+        DBConnector.getSourcesInDB("teacher");
 
 
 
