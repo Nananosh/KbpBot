@@ -22,7 +22,7 @@ public class KeyBoardFactory {
 //        return row;
 //    }
 //    Генерация списка слов со всеми кнопками
-    private static List<List<KeyboardButton>> createRowList(int colonnCount,String... text){
+    private static List<List<KeyboardButton>> createRowList(int colonnCount,List<String> text){
         Queue<String> textQueue = new ArrayDeque<>();
         for(String buttonName:text){
             textQueue.add(buttonName);
@@ -51,7 +51,7 @@ public class KeyBoardFactory {
         }
         return rowList;
     }
-    public static Keyboard createKeyboard(int colonnCount,String... text){
+    public static Keyboard createKeyboard(int colonnCount,List<String> text){
         return new Keyboard().setButtons(createRowList(colonnCount,text));
     }
 }

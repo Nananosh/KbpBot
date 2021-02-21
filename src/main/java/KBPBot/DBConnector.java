@@ -1,6 +1,7 @@
 package KBPBot;
 
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
 
 public class DBConnector {
@@ -67,19 +68,17 @@ public class DBConnector {
         PreparedStatement statement = connection.prepareStatement(query); // создаём наш запрос к бд
         statement.execute();
     }
-    public static void getSourcesInDB(String typeSource) throws SQLException {
+    public static List<String> getSourcesInDB(String typeSource) throws SQLException {
         String query = String.format("SELECT * FROM sources WHERE type in ('%s')",typeSource); // наш запрос к бд
         PreparedStatement statement = connection.prepareStatement(query); // создаём наш запрос к бд
         statement.execute(); // выполняем запрос к бд
         // Обработаем результат
         ResultSet resultSet = statement.getResultSet();
-        resultSet.next();
-        List res = null;
-//        for (int i = 0; i < 3; i++) {
-            res.add(resultSet.getString("name"));
-//        }
-        res.stream().count();
-        System.out.println(res.stream().count());
+        List<String> listResult = new ArrayList<>();
+        while(resultSet.next()) {
+            listResult.add(resultSet.getString("name"));
+        }
+        return listResult;
     }
 
 

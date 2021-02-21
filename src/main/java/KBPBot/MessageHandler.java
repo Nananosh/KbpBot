@@ -9,6 +9,7 @@ import com.vk.api.sdk.exceptions.ClientException;
 import com.vk.api.sdk.objects.messages.Message;
 
 import java.sql.SQLException;
+import java.util.Arrays;
 
 public class MessageHandler {
     private GroupActor actor;
@@ -31,7 +32,8 @@ public class MessageHandler {
                             "/get - получить расписание одной из своих подписок\n" +
                             "/see - посмотреть другое расписание, не подписываясь на него\n" +
                             "/notify - настроить ежедневную рассылку расписания из твоих подписок\n" +
-                            "/notes - открыть заметки\n",KeyBoardFactory.createKeyboard(3      ,"/info","/subscribe","/get","/see","/notify","/notes")).send(vk,actor,message.getFromId());
+                            "/notes - открыть заметки\n",KeyBoardFactory.createKeyboard(3      , Arrays.asList("/info","/subscribe","/get","/see","/notify","/notes"))).send(vk,actor,message.getFromId());
+                    break;
                 }else{
                     System.out.print("Net");
                     DBConnector.insertVkUserInDB(UserVkFactory.userVk(message.getFromId(),vk,actor,"Лох","Vk",0));
@@ -41,11 +43,16 @@ public class MessageHandler {
                             "/get - получить расписание одной из своих подписок\n" +
                             "/see - посмотреть другое расписание, не подписываясь на него\n" +
                             "/notify - настроить ежедневную рассылку расписания из твоих подписок\n" +
-                            "/notes - открыть заметки\n",KeyBoardFactory.createKeyboard(3      ,"/info","/subscribe","/get","/see","/notify","/notes")).send(vk,actor,message.getFromId());
+                            "/notes - открыть заметки\n",KeyBoardFactory.createKeyboard(3      ,Arrays.asList("/info","/subscribe","/get","/see","/notify","/notes"))).send(vk,actor,message.getFromId());
+                    break;
                 }
             case "/subscribe":
-                System.out.printf("Podpiska");
-                MessageFactory.createMessage("Выберите параметр по которому вы хотите подписаться",KeyBoardFactory.createKeyboard(2,"Группа","Преподаватель", "Предмет","Аудитория")).send(vk,actor,message.getFromId());
+                System.out.print("Podpiska");
+                MessageFactory.createMessage("Выберите параметр по которому вы хотите подписаться",KeyBoardFactory.createKeyboard(2,Arrays.asList("Группа","Преподаватель", "Предмет","Аудитория"))).send(vk,actor,message.getFromId());
+                break;
+            case "Группа":
+                MessageFactory.createMessage("Выберите группу",KeyBoardFactory.createKeyboard(2,DBConnector.getSourcesInDB("group"))).send(vk,actor, message.getFromId());
+                break;
         }
     }
 }
