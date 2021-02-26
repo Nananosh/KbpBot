@@ -2,6 +2,7 @@ package KBPBot;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class DBConnector {
@@ -79,6 +80,47 @@ public class DBConnector {
             listResult.add(resultSet.getString("name"));
         }
         return listResult;
+    }
+    public static List<String> getAllSpecialsInDB(String type) throws SQLException {
+        String query = String.format("select distinct substring(\"name\",1,1) as name from sources where type='%S'",type); // наш запрос к бд
+        PreparedStatement statement = connection.prepareStatement(query); // создаём наш запрос к бд
+        statement.execute(); // выполняем запрос к бд
+        // Обработаем результат
+        ResultSet resultSet = statement.getResultSet();
+        List<String> listResult = new ArrayList<>();
+        while(resultSet.next()) {
+            listResult.add(resultSet.getString("name"));
+        }
+
+        return listResult;
+    }
+    public static List<String> getAllSourcesInDB(String nameSource, String type) throws SQLException {
+        String query = String.format("select name from sources where name like N'%S%%' and type='%S'",nameSource,type); // наш запрос к бд
+        PreparedStatement statement = connection.prepareStatement(query); // создаём наш запрос к бд
+        statement.execute(); // выполняем запрос к бд
+        // Обработаем результат
+        ResultSet resultSet = statement.getResultSet();
+        List<String> listResult = new ArrayList<>();
+        while(resultSet.next()) {
+            listResult.add(resultSet.getString("name"));
+        }
+        listResult.sort(String.CASE_INSENSITIVE_ORDER);
+        return listResult;
+    }
+    public static int getIdSourcesInDB(String columnName) throws SQLException {
+        String query = String.format("select * from sources where name = N'%S'",columnName); // наш запрос к бд
+        PreparedStatement statement = connection.prepareStatement(query); // создаём наш запрос к бд
+        statement.execute(); // выполняем запрос к бд
+        // Обработаем результат
+        ResultSet resultSet = statement.getResultSet();
+        resultSet.next();
+        return resultSet.getInt("id");
+    }
+    public static void addSourceUserConnectionsFromDB(String columnName,int userId) throws SQLException {
+        int idSource = getIdSourcesInDB(columnName);
+        String query = String.format("insert into source_user_connections values('%S','%S')",idSource,userId); // наш запрос к бд
+        PreparedStatement statement = connection.prepareStatement(query); // создаём наш запрос к бд
+        statement.execute(); // выполняем запрос к бд
     }
 
 

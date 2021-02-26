@@ -3,7 +3,6 @@ package KBPBot;
 
 import com.vk.api.sdk.client.VkApiClient;
 import com.vk.api.sdk.client.actors.GroupActor;
-import com.vk.api.sdk.client.actors.UserActor;
 import com.vk.api.sdk.exceptions.ApiException;
 import com.vk.api.sdk.exceptions.ClientException;
 import com.vk.api.sdk.objects.messages.Message;
@@ -51,7 +50,13 @@ public class MessageHandler {
                 MessageFactory.createMessage("Выберите параметр по которому вы хотите подписаться",KeyBoardFactory.createKeyboard(2,Arrays.asList("Группа","Преподаватель", "Предмет","Аудитория"))).send(vk,actor,message.getFromId());
                 break;
             case "Группа":
-                MessageFactory.createMessage("Выберите группу",KeyBoardFactory.createKeyboard(2,DBConnector.getSourcesInDB("group"))).send(vk,actor, message.getFromId());
+                MessageFactory.createMessage("Выберите специальность",KeyBoardFactory.createKeyboard(4,DBConnector.getAllSpecialsInDB("group"))).send(vk,actor, message.getFromId());
+                break;
+            case "Т":
+                MessageFactory.createMessage("Выберите свою группу",KeyBoardFactory.createKeyboard(3,DBConnector.getAllSourcesInDB("Т","group"))).send(vk,actor, message.getFromId());
+                break;
+            case "Т-917":
+                DBConnector.addSourceUserConnectionsFromDB(message.getText(),message.getFromId());
                 break;
         }
     }

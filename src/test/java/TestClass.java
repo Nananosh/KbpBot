@@ -7,10 +7,7 @@ import com.vk.api.sdk.exceptions.ClientException;
 import com.vk.api.sdk.httpclient.HttpTransportClient;
 import org.junit.Test;
 
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.List;
 import java.util.Random;
 
 public class TestClass {
@@ -33,9 +30,8 @@ public class TestClass {
 //        parser.parse(listName.get(0).toString()).getAsJsonObject().get("first_name").getAsString();
 //
 //       // String subArgs = obj.get("first_name").getAsString();
-//        System.out.print(parser.parse(listName.get(0).toString()).getAsJsonObject().get("first_name").getAsString());
-        DBConnector.getSourcesInDB("teacher");
-
+//        System.out.print(parser.parse(listName.get(0).toString()).getAsJsonObject().get("first_name").getAsString());//DBConnector.getSourcesInDB("teacher");
+        DBConnector.getIdSourcesInDB("Рогалевич");
 
 
 }
